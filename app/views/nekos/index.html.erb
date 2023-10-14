@@ -1,0 +1,57 @@
+
+<h3>投稿一覧</h3>
+
+<h3>投稿を検索</h3>
+ <%= form_tag({controller:"nekos",action:"index"}, method: :get) do %>
+   <%= text_field_tag :search %>
+   <%= submit_tag '検索する'  %>
+<% end %>
+
+<%= link_to "新規投稿する", new_neko_path %>
+<div class="nekos-container">
+
+<% if user_signed_in? %>
+  <%= link_to "マイページへ", user_path(current_user.id) %>
+<% end %>
+
+  <% @nekos.each do |t| %>
+    <div class="neko">
+      <%= image_tag t.image_url, size: "250x200" if t.image? %>
+      <%= t.town %>
+      
+      
+
+      <%= link_to "詳細へ", neko_path(t.id) %> 
+
+      <% if user_signed_in? %>
+      <% if current_user.already_liked?(t) %>
+          <%= button_to neko_like_path(id: t.id, neko_id: t.id), method: :delete do %>
+            <i class="fas fa-heart"></i><%= t.likes.count %>
+              <p>いいねを取り消す</p>
+          <% end %>
+      <% else %>
+          <%= button_to neko_likes_path(id: t.id, neko_id: t.id), method: :post do %>
+            <i class="far fa-heart"></i><%= t.likes.count %>
+              <p>いいね</p>
+          <% end %>
+      <% end %>
+  <% else %>
+      <i class="far fa-heart"></i><%= t.likes.count %>
+      <p>いいねの数 = </p><%= t.likes.count %>
+  <% end %>
+
+      <% if user_signed_in? && current_user.id == t.user_id %>
+        <%= link_to "編集する", edit_neko_path(t.id) %>
+        <%= button_to "削除する", neko_path(t.id), method: :delete %>
+      <% end %> 
+    </div>
+
+   
+  <% end %>
+  <% if user_signed_in? %>
+    <li><%= button_to 'ログアウト', destroy_user_session_path, method: :delete %></li>
+  <% else %>
+    <li><%= link_to "新規登録", new_user_registration_path %></li>
+    <li><%= link_to "ログイン", new_user_session_path %></li>
+  <% end %>
+</div>

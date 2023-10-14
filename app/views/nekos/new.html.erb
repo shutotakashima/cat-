@@ -1,0 +1,46 @@
+
+<h3>新規投稿ページ</h3>
+<%= form_for @neko do |f| %>
+
+
+  <div class="field">
+    <%= f.label :住所（都道府県） %>
+    <%= f.text_field :town, :size => 30 %>
+  </div>
+
+
+  <div class="field">
+    <%= f.label :保護猫と出会った場所（船橋市保健所等）  %>
+    <%= f.text_area :way, :size => "30x2" %>
+  </div>
+
+
+  <div class="field">
+    <%= f.label :飼うために購入した物品  %>
+    <%= f.text_area :thing, :size => "30x2" %>
+  </div>
+
+
+  <div class="field">
+    <%= f.label :飼うまでにかかった費用の総額  %>
+    <%= f.number_field :cost, :size => 10 %>
+  </div>
+
+  <div class="field">
+    <%= f.label :備考等  %>
+    <%= f.text_area :detail, :size => "30x2" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :猫の画像等 %>
+    <%= f.file_field :image %>
+  </div>
+  
+
+
+
+  <%= f.submit "新規投稿する" %>
+<% end %>
+
+<%= link_to "投稿一覧に戻る", nekos_path %>
+

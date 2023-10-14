@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  town: MyString
+  way: MyText
+  thing: MyText
+  image: MyString
+  cost: 1
+  user_id: 1
+
+two:
+  town: MyString
+  way: MyText
+  thing: MyText
+  image: MyString
+  cost: 1
+  user_id: 1

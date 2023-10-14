@@ -1,0 +1,60 @@
+<h1>meetcatschiba</h1>
+<h3>投稿詳細</h3>
+<div class="neko">
+  <p><%= @neko.user.email %></p>
+  <p><%= @neko.town %></p>
+  <p><%= @neko.way %></p>
+  <p><%= @neko.thing %></p>
+  <p><%= @neko.cost %></p>
+  <p><%= @neko.detail %></p>
+  <p><%= @neko.created_at %></p>
+
+  <% if user_signed_in? %>
+      <% if current_user.already_liked?(@neko) %>
+        <%= button_to neko_like_path(@neko), method: :delete do %>
+          <i class="fas fa-heart"></i><%= @neko.likes.count %>
+          <p>いいねを取り消す</p><%= @neko.likes.count %>
+        <% end %>
+      <% else %>
+        <%= button_to neko_likes_path(@neko), method: :post do %>
+          <i class="far fa-heart"></i><%= @neko.likes.count %>
+          <p>いいね</p><%= @neko.likes.count %>
+        <% end %>
+      <% end %>
+    <% else %>
+    <i class="far fa-heart"></i><%= @neko.likes.count %>
+      <p>いいねの数 = </p><%= @neko.likes.count %>
+    <% end %>
+  <%= link_to "編集する", edit_neko_path(@neko.id) %>
+</div>
+
+<h2>いいねしたユーザー</h2>
+<% @neko.liked_users.each do |user| %>
+  <li><%= user.email %></li>
+<% end %>
+
+</div>
+<%= link_to "編集する", edit_neko_path(@neko.id) %>
+
+<div class="comment-wrapper">
+  <p>コメント一覧</p>
+  <% @comments.each do |c| %>
+    <div>
+      <%= c.user.email unless c.user.blank? %>
+      <br>
+      <%= c.content %>
+    </div>
+      <br>
+  <% end %>
+
+  <% if user_signed_in? %>
+    <%= form_with(model: [@neko, @comment], local: true) do |f| %>
+      <%= f.text_area :content %>
+      <%= button_tag type: "submit" do %>
+        <i class="far fa-comments"></i> コメントする
+      <% end %>
+    <% end %>
+  <% end %>
+</div>
+
+<%= link_to "投稿一覧に戻る", nekos_path %>
